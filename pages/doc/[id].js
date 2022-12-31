@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { getSession, useSession,signOut } from 'next-auth/react'
-import { Avatar, Box, Button,IconButton } from '@mui/material';
+import { getSession, useSession, signOut } from 'next-auth/react'
+import { Avatar, Box, Button, IconButton } from '@mui/material';
 import Login from '../../components/Login';
 import DescriptionIcon from '@mui/icons-material/Description';
 import { collection, doc, getDoc } from 'firebase/firestore';
@@ -17,6 +17,7 @@ function Doc(props) {
     const router = useRouter();
     const { id } = router.query;
     const [snapshot, loadingSnapshot] = useDocumentOnce(doc(db, 'userDoc', session.user.email, 'docs', id));
+    if(loadingSnapshot)return <Box>Loading Data...</Box>
     if (!loadingSnapshot && !snapshot?.data()?.title) router.push('/');
     return (
         <Box>
@@ -45,7 +46,7 @@ function Doc(props) {
 
             <Box>
                 <Box>
-                    <TextEditor />
+                    <TextEditor snapshot={snapshot} />
                 </Box>
             </Box>
         </Box>
@@ -55,8 +56,11 @@ function Doc(props) {
 export default Doc;
 
 export async function getServerSideProps(context) {
+    const { params } = context;
+    const id = params.id;
     const session = await getSession(context);
+    // console.log(session,id);
     return {
-        props: { session, }
+        props: { session,id}
     }
 }
