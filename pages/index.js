@@ -8,10 +8,8 @@ import { getSession, useSession } from 'next-auth/react'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import Login from '../components/Login'
-
 export default function Home(props) {
   const { data: session, status } = useSession()
-
   if (status === 'loading') return <Box fontSize={20}>Loading...</Box>
   if (status !== "authenticated") return <Login />;
 
@@ -32,18 +30,9 @@ export default function Home(props) {
   )
 }
 
-// export async function getServerSidePros(context) {
-//   const session = await getSession({ req: context.req });
-//   if (!session) {
-//     return {
-//       redirect: {
-//         destination: '/signin',
-//         permanent: false,
-//       }
-//     }
-//   }
-//   console.log(session);
-//   return {
-//     props: { session },
-//   }
-// }
+export async function getServerSideProps(context) {
+  const session = await getSession(context);
+  return {
+      props: { session, }
+  }
+}

@@ -36,7 +36,7 @@ function TextEditor(props) {
         }, { merge: true })
     }
     return (
-        <Container minHeight={'80vh'} bgcolor={grey[100]} pb={16}>
+        <Container bgcolor={grey[100]} pb={16}>
             <Editor
                 // toolbarClassName='flex sticky top-0 z-50 justify-center mx-auto'
                 onEditorStateChange={onEditorStateChange}

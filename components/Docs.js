@@ -1,6 +1,7 @@
 import { Box, List, ListSubheader, IconButton, ListItemSecondaryAction, Link, ListItemButton, ListItem, ListItemText, ListItemIcon } from '@mui/material';
 import React from 'react';
 import { useRouter } from 'next/router'
+import { getSession, useSession } from 'next-auth/react';
 import FolderIcon from '@mui/icons-material/Folder';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import DescriptionIcon from '@mui/icons-material/Description';
