@@ -23,7 +23,7 @@ function Docs({ email }) {
     const handleClose = () => {
         setOpen(false);
     };
-    const [snapshot,setSnapshot]=useState();
+    const [snapshot, setSnapshot] = useState();
     const router = useRouter();
     // const [snapshot] = useCollectionOnce(query(collection(db, 'userDoc', email, 'docs'), orderBy('timestamp', 'desc')));
     const collectionRef = collection(db, 'userDoc', email, 'docs');
@@ -32,7 +32,7 @@ function Docs({ email }) {
         setSnapshot(querySnapshot.docs.map(doc => {
             // console.log(doc.data());
             return ({
-                ...doc.data(),  id: doc.id
+                ...doc.data(), id: doc.id
             })
         }))
     });
@@ -77,14 +77,8 @@ function Docs({ email }) {
                                     aria-describedby="alert-dialog-description"
                                 >
                                     <DialogTitle id="alert-dialog-title">
-                                        {"Use Google's location service?"}
+                                        {`Are You Sure to Delete ${doc.title}`}
                                     </DialogTitle>
-                                    <DialogContent>
-                                        <DialogContentText id="alert-dialog-description">
-                                            Let Google help apps determine location. This means sending anonymous
-                                            location data to Google, even when no apps are running.
-                                        </DialogContentText>
-                                    </DialogContent>
                                     <DialogActions>
                                         <Button onClick={handleClose}>Cancel</Button>
                                         <Button onClick={e => handleDelete(e, doc?.id)} autoFocus>
