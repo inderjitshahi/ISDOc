@@ -14,5 +14,6 @@ export default NextAuth({
         }),
     ],
     adapter: FirestoreAdapter(firebaseConfig),
+    secret:process.env.NEXTAUTH_SECRET,
     // ...
 });
