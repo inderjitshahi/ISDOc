@@ -7,11 +7,16 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { db } from '../firebase'
 import { addDoc, collection, doc, getDoc, getDocs, orderBy, query, serverTimestamp } from '@firebase/firestore';
+import { useRouter } from 'next/router';
+
+
+
 function Start({ email }) {
     const [title, setTitle] = useState('');
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
-    const handleClose = () => setOpen(false);;
+    const handleClose = () => setOpen(false);
+    const router = useRouter();
     const style = {
         position: 'absolute',
         top: '50%',
@@ -34,7 +39,10 @@ function Start({ email }) {
         try {
             const collectionRef = collection(db, 'userDoc', email, 'docs');
             const res = await addDoc(collectionRef, { title: title, timestamp: serverTimestamp() });
-            console.log(res.id);
+            if(!res.id)return <Box fontSize={20}>Creating Your New Doc...</Box>
+            if (res.id) {
+                router.push(`/doc/${res.id}`)
+            }
 
         } catch (err) {
             console.log("err", err);
@@ -64,7 +72,7 @@ function Start({ email }) {
                     >
                         <Box sx={style} display='flex' flexDirection={'column'} gap={5} borderRadius={2}>
                             <Input placeholder='Enter title' value={title} onChange={e => setTitle(e.target.value)}></Input>
-                            <Box display={'flex'}  justifyContent='flex-end' gap={5}>
+                            <Box display={'flex'} justifyContent='flex-end' gap={5}>
                                 <Button variant='contained' onClick={createDoc}>create</Button>
                                 <Button onClick={handleClose}>Cancel</Button>
                             </Box>
