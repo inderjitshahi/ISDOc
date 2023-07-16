@@ -7,12 +7,12 @@ import Docs from '../components/Docs'
 import { getSession, useSession } from 'next-auth/react'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
+import { db } from '../firebase'
 import Login from '../components/Login'
 export default function Home(props) {
   const { data: session, status } = useSession()
   if (status === 'loading') return <Box fontSize={20}>Loading...</Box>
   if (status !== "authenticated") return <Login />;
-
   return (
     <>
       <Head>

@@ -5,7 +5,7 @@ function Login(props) {
     return (
         <Container>
             <Box display={'flex'} alignItems='center' justifyContent={'center'} minHeight='100vh'>
-                <Button variant="contained" onClick={signIn}>Sign In with Google</Button>
+                <Button variant="contained" onClick={signIn}>Sign In with Github</Button>
             </Box>
         </Container>
     );
