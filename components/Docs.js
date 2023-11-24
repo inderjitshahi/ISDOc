@@ -12,6 +12,8 @@ import { useCollectionOnce } from 'react-firebase-hooks/firestore';
 import { collection, deleteDoc, doc, onSnapshot, orderBy, query } from 'firebase/firestore';
 import { db } from '../firebase';
 import DeleteIcon from '@mui/icons-material/Delete';
+import 'react-toastify/dist/ReactToastify.css';
+import { toast } from 'react-toastify';
 function Docs({ email }) {
 
     const [open, setOpen] = React.useState(false);
@@ -41,6 +43,15 @@ function Docs({ email }) {
         setOpen(false);
         const docRef = doc(db, 'userDoc', email, 'docs', id);
         deleteDoc(docRef);
+        // Show a success notification
+        toast.success('Deleted', {
+            position: 'top-right',
+            autoClose: 1000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+        });
         router.push('/');
     }
     return (

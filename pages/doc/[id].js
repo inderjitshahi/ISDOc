@@ -10,6 +10,8 @@ import { useRouter } from 'next/router';
 import { grey } from '@mui/material/colors';
 import TextEditor from '../../components/TextEditor';
 import Link from 'next/link';
+
+
 function Doc(props) {
     const { data: session, status } = useSession();
     if (status === 'loading') return <Box fontSize={20}>Loading...</Box>;
@@ -17,7 +19,7 @@ function Doc(props) {
     const router = useRouter();
     const { id } = router.query;
     const [snapshot, loadingSnapshot] = useDocumentOnce(doc(db, 'userDoc', session.user.email, 'docs', id));
-    if(loadingSnapshot)return <Box>Loading Data...</Box>
+    if (loadingSnapshot) return <Box>Loading Data...</Box>
     if (!loadingSnapshot && !snapshot?.data()?.title) router.push('/');
     return (
         <Box>
@@ -61,6 +63,6 @@ export async function getServerSideProps(context) {
     const session = await getSession(context);
     // console.log(session,id);
     return {
-        props: { session,id}
+        props: { session, id }
     }
 }

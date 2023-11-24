@@ -8,13 +8,16 @@ import Link from 'next/link';
 import { db } from '../firebase'
 import { addDoc, collection, doc, getDoc, getDocs, orderBy, query, serverTimestamp } from '@firebase/firestore';
 import { useRouter } from 'next/router';
-
+import 'react-toastify/dist/ReactToastify.css';
+import { toast } from 'react-toastify';
 
 
 function Start({ email }) {
     const [title, setTitle] = useState('');
     const [open, setOpen] = useState(false);
-    const handleOpen = () => setOpen(true);
+    const handleOpen = () => {
+        setOpen(true);
+    };
     const handleClose = () => setOpen(false);
     const router = useRouter();
     const style = {
@@ -39,11 +42,20 @@ function Start({ email }) {
         try {
             const collectionRef = collection(db, 'userDoc', email, 'docs');
             const res = await addDoc(collectionRef, { title: title, timestamp: serverTimestamp() });
-            if(!res.id)return <Box fontSize={20}>Creating Your New Doc...</Box>
+            if (!res.id) return <Box fontSize={20}>Creating Your New Doc...</Box>
+            //   Show a success notification
             if (res.id) {
                 router.push(`/doc/${res.id}`)
             }
-
+            toast.success('Created Successfully!', {
+                position: 'top-right',
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+            });
+            
         } catch (err) {
             console.log("err", err);
         }
