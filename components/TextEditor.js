@@ -50,7 +50,7 @@ function TextEditor({ snapshot }) {
     useEffect(() => {
         const timeoutId = setTimeout(() => {
             debouncedSave(editorState);
-        }, 2000);
+        }, 4000);
 
         return () => {
             // Clear the timeout when the editor state changes
